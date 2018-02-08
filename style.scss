@@ -1,0 +1,174 @@
+// CSS RESET
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%; // 10px / 16px = 62.5%
+}
+
+.container {
+  margin: 2rem;
+  
+  // CSS Grid
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+  grid-gap: 10rem;
+  grid-auto-rows: 40rem;
+}
+
+.card {
+  display: block;
+  width: 30rem;
+  height: 40rem;
+  border-radius: 2.6rem; // Gives the card rounded corners.
+  box-shadow: 0 .5rem 1rem rgba(#000, .45); // Gives the card a shadow.
+  transition: all 1s ease; // Gives a smooth transition to the rotating card.
+
+  /* With backface-visibility set to 'hidden', the back side of the card will not be shown when  facing the user. */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.original {
+  position: relative;
+  
+  &__side {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-bottom: 10rem;
+    
+    &--front {
+      // Alternative for tablets and phones
+      @media only screen and (hover: none) {    
+        -webkit-animation: rotating-fr 4s linear 0s 3 normal;
+        animation: rotating-fr 4s linear 0s 3 normal;      
+      }
+    }
+    &--back {
+      background-color: blue;
+      transform: rotateY(180deg); 
+      
+      // Alternative for tablets and phones
+      @media only screen and (hover: none) {    
+        -webkit-animation: rotating-ba 4s linear 0s 3 normal;
+        animation: rotating-ba 4s linear 0s 3 normal;      
+      }
+    }
+  }
+  
+  &:hover &__side--front {
+    transform: rotateY(-180deg);
+  }
+
+  &:hover &__side--back {
+     transform: rotateY(0);
+  }
+}
+
+// 2. Rotating card: the Flexbox way
+.flex {  
+  // Flexbox
+  display: flex;
+  
+  &__side {
+    margin-right: -300px;   
+    
+    &--front {
+      background-color: green;
+      
+      // Alternative for tablets and phones
+      @media only screen and (hover: none) {    
+        -webkit-animation: rotating-fr 3s linear 0s 3 normal;
+        animation: rotating-fr 3s linear 0s 3 normal;      
+      }
+    }
+    
+    &--back {
+      background-color: pink;
+      transform: rotateY(180deg);
+      
+      // Alternative for tablets and phones
+      @media only screen and (hover: none) {    
+        -webkit-animation: rotating-ba 3s linear 0s 3 normal;
+        animation: rotating-ba 3s linear 0s 3 normal;      
+      }
+    }
+  }
+  
+  &:hover &__side--front {
+    transform: rotateY(-180deg);
+  }
+
+  &:hover &__side--back {
+    transform: rotateY(0deg);
+  }  
+}
+
+
+// 3. Rotating card: the CSS Grid way
+.grid {  
+  // CSS Grid
+  display: grid;
+  
+  &__side {    
+    //CSS Grid
+    grid-row: 1 / -1;
+    grid-column: 1 / -1;
+    
+    &--front {
+      background-color: yellow;
+      
+      // Alternative for tablets and phones
+      @media only screen and (hover: none) {    
+        -webkit-animation: rotating-fr 3s linear 0s 3 normal;
+        animation: rotating-fr 3s linear 0s 3 normal;      
+      }
+    }
+    
+    &--back {
+      background-color: purple;
+      transform: rotateY(180deg);
+      
+      // Alternative for tablets and phones
+      @media only screen and (hover: none) {    
+        -webkit-animation: rotating-ba 3s linear 0s 3 normal;
+        animation: rotating-ba 3s linear 0s 3 normal;      
+      }
+    }
+  }
+  
+  &:hover &__side--front {
+    transform: rotateY(-180deg);
+  }
+
+  &:hover &__side--back {
+     transform: rotateY(0);
+  }
+}
+
+// Alternative for tablets and phones to show the result without hovering.
+@keyframes rotating-ba {
+  0% { transform: rotateY(-180deg); }
+  100% { transform: rotateY(0deg); }
+}
+
+@-webkit-keyframes rotating-ba {
+  0% {-webkit-transform: rotateY(-180deg); }
+  100% { -webkit-transform: rotateY(0deg); }
+}
+
+@keyframes rotating-fr {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(-180deg); }
+}
+@-webkit-keyframes rotating-fr {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(-180deg); }
+}
